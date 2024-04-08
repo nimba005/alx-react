@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Notifications from '..Notifications/Notifications.js';
-import Login from '../Login/Login';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Notifications from './components/Notifications/Notifications';
+import Login from './components/Login/Login';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
