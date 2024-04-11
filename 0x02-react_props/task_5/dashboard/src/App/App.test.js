@@ -6,6 +6,12 @@ import Footer from "../Footer/Footer";
 import Notifications from "../Notifications/Notifications";
 import CourseList from "../CourseList/CourseList";
 import { shallow } from "enzyme";
+import jest from 'jest-mock';
+
+jest.mock('./Notifications', () => ({ // Mock the Notifications component
+  __esModule: true,
+  default: jest.fn(() => <div>Mocked Notifications</div>), // Mock rendering
+}));
 
 describe("App tests", () => {
   it("renders without crashing", () => {
@@ -13,10 +19,9 @@ describe("App tests", () => {
 
     expect(component).toBeDefined();
   });
-  it("should render Notifications component", () => {
-    const component = shallow(<App />);
-
-    expect(component.containsMatchingElement(<Notifications />)).toEqual(true);
+  it('should render Notifications component', () => {
+  const component = shallow(<App displayDrawer={true} listNotifications={[]} />); // Provide props
+  expect(component.find('.Notifications')).toHaveLength(1); // Check for a class
   });
   it("should render Header component", () => {
     const component = shallow(<App />);
