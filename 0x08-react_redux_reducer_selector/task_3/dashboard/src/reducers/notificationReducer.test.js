@@ -1,4 +1,7 @@
-import notificationReducer, { initialNotificationState } from './notificationReducer';
+import notificationReducer, {
+  initialNotificationState,
+} from './notificationReducer';
+
 import {
   FETCH_NOTIFICATIONS_SUCCESS,
   MARK_AS_READ,
@@ -15,20 +18,48 @@ describe('courseReducer', function () {
     const action = {
       type: FETCH_NOTIFICATIONS_SUCCESS,
       data: [
-        { id: 1, type: 'default', value: 'New course available' },
-        { id: 2, type: 'urgent', value: 'New resume available' },
-        { id: 3, type: 'urgent', value: 'New data available' },
+        {
+          id: 1,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+        {
+          id: 3,
+          type: 'urgent',
+          value: 'New data available',
+        },
       ],
     };
+
     const expectedData = {
       filter: 'DEFAULT',
       notifications: [
-        { id: 1, type: 'default', value: 'New course available', isRead: false },
-        { id: 2, type: 'urgent', value: 'New resume available', isRead: false },
-        { id: 3, type: 'urgent', value: 'New data available', isRead: false },
+        {
+          id: 1,
+          isRead: false,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          isRead: false,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+        {
+          id: 3,
+          isRead: false,
+          type: 'urgent',
+          value: 'New data available',
+        },
       ],
     };
-    
+
     const state = notificationReducer(undefined, action);
     expect(state).toEqual(expectedData);
   });
@@ -37,9 +68,24 @@ describe('courseReducer', function () {
     const initialState = {
       filter: 'DEFAULT',
       notifications: [
-        { id: 1, type: 'default', value: 'New course available', isRead: false },
-        { id: 2, type: 'urgent', value: 'New resume available', isRead: false },
-        { id: 3, type: 'urgent', value: 'New data available', isRead: false },
+        {
+          id: 1,
+          isRead: false,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          isRead: false,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+        {
+          id: 3,
+          isRead: false,
+          type: 'urgent',
+          value: 'New data available',
+        },
       ],
     };
 
@@ -47,3 +93,89 @@ describe('courseReducer', function () {
       type: MARK_AS_READ,
       index: 2,
     };
+
+    const expectedData = {
+      filter: 'DEFAULT',
+      notifications: [
+        {
+          id: 1,
+          isRead: false,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          isRead: true,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+        {
+          id: 3,
+          isRead: false,
+          type: 'urgent',
+          value: 'New data available',
+        },
+      ],
+    };
+
+    const state = notificationReducer(initialState, action);
+    expect(state).toEqual(expectedData);
+  });
+  it('SET_TYPE_FILTER', function () {
+    const initialState = {
+      filter: 'DEFAULT',
+      notifications: [
+        {
+          id: 1,
+          isRead: false,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          isRead: false,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+        {
+          id: 3,
+          isRead: false,
+          type: 'urgent',
+          value: 'New data available',
+        },
+      ],
+    };
+
+    const action = {
+      type: SET_TYPE_FILTER,
+      filter: 'URGENT',
+    };
+
+    const expectedData = {
+      filter: 'URGENT',
+      notifications: [
+        {
+          id: 1,
+          isRead: false,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          isRead: false,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+        {
+          id: 3,
+          isRead: false,
+          type: 'urgent',
+          value: 'New data available',
+        },
+      ],
+    };
+
+    const state = notificationReducer(initialState, action);
+    expect(state).toEqual(expectedData);
+  });
+});
